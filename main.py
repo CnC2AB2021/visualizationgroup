@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 from scipy.stats import zscore
 
 def drop_zscore(data, thresh = 10):
-  # return data[data < 50]
   z_scores = zscore(data)
   return data[np.abs(z_scores) <= thresh]
 
@@ -13,9 +12,7 @@ def drop_zscore(data, thresh = 10):
 df = pd.read_csv('exoplanets.csv')
 year_len = df['Period (days)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True)
 year_len = year_len[~year_len.str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')].astype(np.float32).dropna()
-year_len = drop_zscore(year_len, 2)
-print(year_len)
-print((year_len.min(), year_len.max()))
+year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len, 1), 1), 1), 1), 1)
 
 # Bar Graph
 fig, ax = plt.subplots(2, 1)
