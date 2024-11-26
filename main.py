@@ -58,6 +58,8 @@ ax[1][1].boxplot(dist_ly)
 ax[1][1].set_title('Box Plot of Distance from Earth')
 ax[1][1].set_ylabel('Distance (light years)')
 ax[1][2].boxplot(drop_zscore(dist_ly, 1))
+ax[1][2].set_title('Box Plot of Distance from Earth')
+ax[1][2].set_ylabel('Distance (light years)')
 
 ax[0][2].set_visible(False)
 
