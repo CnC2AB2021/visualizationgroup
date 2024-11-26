@@ -26,6 +26,27 @@ ax[0][1].pie(disc_methd)
 ax[0][1].legend(disc_methd.keys(), title='Categories', loc='upper left', bbox_to_anchor=(1, 1))
 ax[0][1].set_title('Discovery Method')
 
+# Line Graph of Mass vs. Host Star Mass
+
+mass_df = df[~df['Mass (MJ)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$') & ~df['Host star mass (M☉)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
+mass_df['Mass (MJ)'] = pd.to_numeric(mass_df['Mass (MJ)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
+mass_df['Host star mass (M☉)'] = pd.to_numeric(mass_df['Host star mass (M☉)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
+mass_df = mass_df.dropna(subset=['Mass (MJ)', 'Host star mass (M☉)'])
+
+mass = mass_df['Mass (MJ)']
+host_mass = mass_df['Host star mass (M☉)']
+z_scores_1 = np.abs(zscore(mass))
+z_scores_2 = np.abs(zscore(host_mass))
+mass = mass[(z_scores_1 <= 1) | (z_scores_2 <= 1)]
+host_mass = host_mass[(z_scores_1 <= 1) | (z_scores_2 <= 1)]
+
+m, b = np.polyfit(host_mass, mass, 1)
+ax[1][0].scatter(host_mass, mass)
+ax[1][0].plot(host_mass, m * host_mass + b)
+ax[1][0].set_title('Host Mass v. Mass')
+ax[1][0].set_xlabel('Host Star Mass')
+ax[1][0].set_ylabel('Mass of Exoplanet')
+
 fig.tight_layout()
 fig.show()
 
