@@ -52,6 +52,13 @@ ax[1][0].set_title('Host Mass v. Mass')
 ax[1][0].set_xlabel('Host Star Mass')
 ax[1][0].set_ylabel('Mass of Exoplanet')
 
+# box plot of Distance (ly)
+
+dist_ly = parse_shit_number(df['Distance (ly)'])
+ax[1][1].boxplot(dist_ly)
+ax[1][1].set_title('Box Plot of Distance from Earth')
+ax[1][1].set_ylabel('Distance (light years)')
+ax[1][2].boxplot(drop_zscore(dist_ly, 1))
 
 ax[0][2].set_visible(False)
 
