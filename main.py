@@ -11,6 +11,7 @@ def drop_zscore(data, thresh = 10):
 fig, ax = plt.subplots(2, 2)
 df = pd.read_csv('exoplanets.csv')
 
+# Bar Graph of Length of Year
 year_len = df['Period (days)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True)
 year_len = year_len[~year_len.str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
 year_len= pd.to_numeric(year_len, errors='coerce').dropna()
@@ -21,6 +22,7 @@ ax[0][0].set_xlabel('Period (days)')
 ax[0][0].set_ylabel('Number of exoplanets')
 ax[0][0].grid(axis='y')
 
+# Pie Chart of Discovery Method
 disc_methd = df['Discovery method'].value_counts()
 ax[0][1].pie(disc_methd)
 ax[0][1].legend(disc_methd.keys(), title='Categories', loc='upper left', bbox_to_anchor=(1, 1))
@@ -46,6 +48,9 @@ ax[1][0].plot(host_mass, m * host_mass + b)
 ax[1][0].set_title('Host Mass v. Mass')
 ax[1][0].set_xlabel('Host Star Mass')
 ax[1][0].set_ylabel('Mass of Exoplanet')
+
+# Line Graph of Mass vs. Temp
+
 
 fig.tight_layout()
 fig.show()
