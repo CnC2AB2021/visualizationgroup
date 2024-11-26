@@ -7,14 +7,17 @@ def drop_zscore(data, thresh = 10):
   z_scores = zscore(data)
   return data[np.abs(z_scores) <= thresh]
 
+def parse_shit_number(data):
+  data = data.astype(str).str.replace(r"±[\d,.]+", "", regex=True)
+  data = data[~data.str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
+  return pd.to_numeric(data, errors='coerce').dropna()
+
 # Exoplanet Attributes: IBHL Collaborative Project
 fig, ax = plt.subplots(2, 2)
 df = pd.read_csv('exoplanets.csv')
 
 # Bar Graph of Length of Year
-year_len = df['Period (days)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True)
-year_len = year_len[~year_len.str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
-year_len= pd.to_numeric(year_len, errors='coerce').dropna()
+year_len = parse_shit_number(df['Period (days)'])
 year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len, 1), 1), 1), 1), 1)
 ax[0][0].hist(year_len, bins=50)
 ax[0][0].set_title('Length of Year')
