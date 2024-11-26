@@ -14,6 +14,7 @@ def parse_shit_number(data):
 
 # Exoplanet Attributes: IBHL Collaborative Project
 fig, ax = plt.subplots(2, 3)
+fig.subplots_adjust(wspace=0.5, hspace=0.5)
 df = pd.read_csv('exoplanets.csv')
 
 # Bar Graph of Length of Year
