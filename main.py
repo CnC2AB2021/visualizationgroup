@@ -21,6 +21,10 @@ ax[0][0].set_xlabel('Period (days)')
 ax[0][0].set_ylabel('Number of exoplanets')
 ax[0][0].grid(axis='y')
 
+disc_methd = df['Discovery method'].value_counts()
+ax[0][1].pie(disc_methd)
+ax[0][1].legend(disc_methd.keys(), title='Categories', loc='upper left', bbox_to_anchor=(1, 1))
+ax[0][1].set_title('Discovery Method')
 
 fig.tight_layout()
 fig.show()
