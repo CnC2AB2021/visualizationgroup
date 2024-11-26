@@ -13,7 +13,7 @@ def parse_shit_number(data):
   return pd.to_numeric(data, errors='coerce').dropna()
 
 # Exoplanet Attributes: IBHL Collaborative Project
-fig, ax = plt.subplots(2, 2)
+fig, ax = plt.subplots(2, 3)
 df = pd.read_csv('exoplanets.csv')
 
 # Bar Graph of Length of Year
@@ -52,8 +52,8 @@ ax[1][0].set_title('Host Mass v. Mass')
 ax[1][0].set_xlabel('Host Star Mass')
 ax[1][0].set_ylabel('Mass of Exoplanet')
 
-# Line Graph of Mass vs. Temp
 
+ax[0][2].set_visible(False)
 
 fig.tight_layout()
 fig.show()
