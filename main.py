@@ -32,7 +32,6 @@ ax[0][1].legend(disc_methd.keys(), title='Categories', loc='upper left', bbox_to
 ax[0][1].set_title('Discovery Method')
 
 # Line Graph of Mass vs. Host Star Mass
-
 mass_df = df[~df['Mass (MJ)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$') & ~df['Host star mass (M☉)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
 mass_df['Mass (MJ)'] = pd.to_numeric(mass_df['Mass (MJ)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
 mass_df['Host star mass (M☉)'] = pd.to_numeric(mass_df['Host star mass (M☉)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
@@ -53,7 +52,6 @@ ax[1][0].set_xlabel('Host Star Mass')
 ax[1][0].set_ylabel('Mass of Exoplanet')
 
 # box plot of Distance (ly)
-
 dist_ly = parse_shit_number(df['Distance (ly)'])
 ax[1][1].boxplot(dist_ly)
 ax[1][1].set_title('Box Plot of Distance from Earth')
