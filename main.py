@@ -29,13 +29,32 @@ ax[0][0].grid(axis='y')
 # Pie Chart of Discovery Method
 disc_methd = df['Discovery method'].value_counts()
 ax[0][1].pie(disc_methd)
-ax[0][1].legend([f'({ratio * 100:.1f}%) {label}' for label, ratio in zip(disc_methd.keys(), disc_methd / disc_methd.sum())], title='Categories', loc='upper left', bbox_to_anchor=(1, 1))
+ax[0][1].legend(
+  [f'({ratio * 100:.1f}%) {label}' for label, ratio in zip(disc_methd.keys(), disc_methd / disc_methd.sum())], title='Categories',
+  loc='upper left',
+  bbox_to_anchor=(1, 1)
+)
 ax[0][1].set_title('Discovery Method')
 
 # Line Graph of Mass vs. Host Star Mass
-mass_df = df[~df['Mass (MJ)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$') & ~df['Host star mass (M☉)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
-mass_df['Mass (MJ)'] = pd.to_numeric(mass_df['Mass (MJ)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
-mass_df['Host star mass (M☉)'] = pd.to_numeric(mass_df['Host star mass (M☉)'].astype(str).str.replace(r"±[\d,.]+", "", regex=True).replace(r"\[\d+\]", "", regex=True), errors='coerce')
+mass_df = df[
+  ~df['Mass (MJ)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$') &
+  ~df['Host star mass (M☉)'].astype(str).str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')
+]
+mass_df['Mass (MJ)'] = pd.to_numeric(
+  mass_df['Mass (MJ)']
+    .astype(str).str
+    .replace(r"±[\d,.]+", "", regex=True)
+    .replace(r"\[\d+\]", "", regex=True),
+  errors='coerce'
+)
+mass_df['Host star mass (M☉)'] = pd.to_numeric(
+  mass_df['Host star mass (M☉)']
+    .astype(str).str
+    .replace(r"±[\d,.]+", "", regex=True)
+    .replace(r"\[\d+\]", "", regex=True),
+  errors='coerce'
+)
 mass_df = mass_df.dropna(subset=['Mass (MJ)', 'Host star mass (M☉)'])
 
 mass = mass_df['Mass (MJ)']
