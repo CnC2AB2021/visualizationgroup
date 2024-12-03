@@ -80,13 +80,14 @@ def box_plot(data, ax, title, xlabel):
   ax.set_title(title)
   ax.set_xlabel(xlabel)
 
-  ax.set_yticks([1])
-  ax.set_yticklabels(['category'])
+  ax.set_yticks([])
+  ax.set_yticklabels([])
 
   quantiles = np.quantile(data, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
   ax.vlines(quantiles, [0] * quantiles.size, [1] * quantiles.size, color='b', ls=':', lw=0.5, zorder=0)
   ax.set_ylim(0.5, 1.5)
   ax.set_xticks(quantiles)
+
 box_plot(dist_ly, ax[1][1], 'Box Plot of Distance from Earth', 'Distance (light years)')
 box_plot(drop_zscore(drop_zscore(dist_ly)), ax[1][2], 'Box Plot of Distance from Earth', 'Distance (light years)')
 
