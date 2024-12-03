@@ -75,12 +75,20 @@ ax[1][0].set_ylabel('Mass of Exoplanet')
 
 # box plot of Distance (ly)
 dist_ly = parse_shit_number(df['Distance (ly)'])
-ax[1][1].boxplot(dist_ly)
-ax[1][1].set_title('Box Plot of Distance from Earth')
-ax[1][1].set_ylabel('Distance (light years)')
-ax[1][2].boxplot(drop_zscore(dist_ly, 1))
-ax[1][2].set_title('Box Plot of Distance from Earth')
-ax[1][2].set_ylabel('Distance (light years)')
+def box_plot(data, ax):
+  ax.boxplot(data, vert=False, manage_ticks=True)
+  ax.set_title('Box Plot of Distance from Earth')
+  ax.set_xlabel('Distance (light years)')
+
+  ax.set_yticks([1])
+  ax.set_yticklabels(['category'])
+
+  quantiles = np.quantile(data, np.array([0.00, 0.25, 0.50, 0.75, 1.00]))
+  ax.vlines(quantiles, [0] * quantiles.size, [1] * quantiles.size, color='b', ls=':', lw=0.5, zorder=0)
+  ax.set_ylim(0.5, 1.5)
+  ax.set_xticks(quantiles)
+box_plot(dist_ly, ax[1][1])
+box_plot(drop_zscore(dist_ly, 1), ax[1][2])
 
 ax[0][2].set_visible(False)
 
