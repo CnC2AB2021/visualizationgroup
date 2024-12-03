@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import zscore
 
-def drop_zscore(data, thresh = 10):
+def drop_zscore(data, thresh = 2.5):
   z_scores = zscore(data)
   return data[np.abs(z_scores) <= thresh]
 
@@ -15,13 +15,13 @@ def parse_shit_number(data):
   return pd.to_numeric(data, errors='coerce').dropna()
 
 # Exoplanet Attributes: IBHL Collaborative Project
-fig, ax = plt.subplots(2, 3)
+fig, ax = plt.subplots(3, 3)
 fig.subplots_adjust(wspace=0.5, hspace=0.5)
 df = pd.read_csv('exoplanets.csv')
 
 # Bar Graph of Length of Year
 year_len = parse_shit_number(df['Period (days)'])
-year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len, 1), 1), 1), 1)
+year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len)))))))
 ax[0][0].hist(year_len, bins=50)
 ax[0][0].set_title('Length of Year')
 ax[0][0].set_xlabel('Period (days)')
@@ -75,10 +75,10 @@ ax[1][0].set_ylabel('Mass of Exoplanet')
 
 # box plot of Distance (ly)
 dist_ly = parse_shit_number(df['Distance (ly)'])
-def box_plot(data, ax):
+def box_plot(data, ax, title, xlabel):
   ax.boxplot(data, vert=False, manage_ticks=True)
-  ax.set_title('Box Plot of Distance from Earth')
-  ax.set_xlabel('Distance (light years)')
+  ax.set_title(title)
+  ax.set_xlabel(xlabel)
 
   ax.set_yticks([1])
   ax.set_yticklabels(['category'])
@@ -87,10 +87,15 @@ def box_plot(data, ax):
   ax.vlines(quantiles, [0] * quantiles.size, [1] * quantiles.size, color='b', ls=':', lw=0.5, zorder=0)
   ax.set_ylim(0.5, 1.5)
   ax.set_xticks(quantiles)
-box_plot(dist_ly, ax[1][1])
-box_plot(drop_zscore(dist_ly, 1), ax[1][2])
+box_plot(dist_ly, ax[1][1], 'Box Plot of Distance from Earth', 'Distance (light years)')
+box_plot(drop_zscore(dist_ly), ax[1][2], 'Box Plot of Distance from Earth', 'Distance (light years)')
+
+planet_temp = parse_shit_number(df['Temp. (K)'])
+box_plot(planet_temp, ax[2][0], 'Box Plot of Temperature', 'Temperature (K)')
+box_plot(drop_zscore(planet_temp), ax[2][1], 'Box Plot of Temperature', 'Temperature (K)')
 
 ax[0][2].set_visible(False)
+ax[2][2].set_visible(False)
 
 fig.tight_layout()
 fig.show()
