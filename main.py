@@ -21,7 +21,7 @@ df = pd.read_csv('exoplanets.csv')
 
 # Bar Graph of Length of Year
 year_len = parse_shit_number(df['Period (days)'])
-year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len, 1), 1), 1), 1), 1)
+year_len = drop_zscore(drop_zscore(drop_zscore(drop_zscore(year_len, 1), 1), 1), 1)
 ax[0][0].hist(year_len, bins=50)
 ax[0][0].set_title('Length of Year')
 ax[0][0].set_xlabel('Period (days)')
