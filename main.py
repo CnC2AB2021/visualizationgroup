@@ -8,7 +8,9 @@ def drop_zscore(data, thresh = 10):
   return data[np.abs(z_scores) <= thresh]
 
 def parse_shit_number(data):
-  data = data.astype(str).str.replace(r"±[\d,.]+", "", regex=True)
+  data = data.astype(str).str\
+    .replace(r"±[\d,.]+", "", regex=True)\
+    .replace(r"\[\d+\]", "", regex=True)
   data = data[~data.str.contains(r'^[\d,.]+\+[\d,.]+−[\d,.]+$')]
   return pd.to_numeric(data, errors='coerce').dropna()
 
