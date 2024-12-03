@@ -88,7 +88,7 @@ def box_plot(data, ax, title, xlabel):
   ax.set_ylim(0.5, 1.5)
   ax.set_xticks(quantiles)
 box_plot(dist_ly, ax[1][1], 'Box Plot of Distance from Earth', 'Distance (light years)')
-box_plot(drop_zscore(dist_ly), ax[1][2], 'Box Plot of Distance from Earth', 'Distance (light years)')
+box_plot(drop_zscore(drop_zscore(dist_ly)), ax[1][2], 'Box Plot of Distance from Earth', 'Distance (light years)')
 
 planet_temp = parse_shit_number(df['Temp. (K)'])
 box_plot(planet_temp, ax[2][0], 'Box Plot of Temperature', 'Temperature (K)')
